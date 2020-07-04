@@ -30,3 +30,10 @@ In the file config.py, there are several Data Augmentation variables. These can 
 - backtranslation_langs = 'None'
 - use_word_mixup = 0
 - original_multiplier = 3
+
+Furthermore, in main.py make sure that:
+ loadData = True 
+ augment_data = True 
+ useOntology = True 
+ runLCRROTALT = True
+For the rest all parameters in main.py should be False.
