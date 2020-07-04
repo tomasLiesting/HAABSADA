@@ -1,5 +1,5 @@
 hyperopt==0.1
-nltk==3.3
+nltk==3.4.5
 numpy==1.14.6
 Owlready2==0.8
 pandas==0.23.1
