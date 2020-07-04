@@ -1,9 +1,6 @@
 import tensorflow as tf
 import lcrModelAlt
-import lcrModel
-import lcrModelInverse
-import svmModel
-import cabascModel
+
 
 from OntologyReasoner import OntReasoner
 from loadData import *
@@ -45,67 +42,6 @@ svmspace = [
                 hp.choice('gamma', [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100])
             ]
 
-# Define objectives for hyperopt
-def lcr_objective(hyperparams):
-    global eval_num
-    global best_loss
-    global best_hyperparams
-
-    eval_num += 1
-    (learning_rate, keep_prob, momentum, l2) = hyperparams
-    print(hyperparams)
-
-    l, pred1, fw1, bw1, tl1, tr1, _, _ = lcrModel.main(FLAGS.hyper_train_path, FLAGS.hyper_eval_path, accuracyOnt, test_size, remaining_size, learning_rate, keep_prob, momentum, l2)
-    tf.reset_default_graph()
-
-    # Save training results to disks with unique filenames
-
-    print(eval_num, l, hyperparams)
-
-    if best_loss is None or -l < best_loss:
-        best_loss = -l
-        best_hyperparams = hyperparams
-
-    result = {
-            'loss':   -l,
-            'status': STATUS_OK,
-            'space': hyperparams,
-        }
-
-    save_json_result(str(l), result)
-
-    return result
-
-def lcr_inv_objective(hyperparams):
-    global eval_num
-    global best_loss
-    global best_hyperparams
-
-    eval_num += 1
-    (learning_rate, keep_prob, momentum, l2) = hyperparams
-    print(hyperparams)
-
-    l, pred1, fw1, bw1, tl1, tr1 = lcrModelInverse.main(FLAGS.hyper_train_path, FLAGS.hyper_eval_path, accuracyOnt, test_size, remaining_size, learning_rate, keep_prob, momentum, l2)
-    tf.reset_default_graph()
-
-    # Save training results to disks with unique filenames
-
-    print(eval_num, l, hyperparams)
-
-    if best_loss is None or -l < best_loss:
-        best_loss = -l
-        best_hyperparams = hyperparams
-
-    result = {
-            'loss':   -l,
-            'status': STATUS_OK,
-            'space': hyperparams,
-        }
-
-    save_json_result(str(l), result)
-
-    return result
-
 def lcr_alt_objective(hyperparams):
     global eval_num
     global best_loss
@@ -136,67 +72,7 @@ def lcr_alt_objective(hyperparams):
 
     return result
 
-def cabasc_objective(hyperparams):
-    global eval_num
-    global best_loss
-    global best_hyperparams
-
-    eval_num += 1
-    (learning_rate, keep_prob) = hyperparams
-    print(hyperparams)
-
-    l = cabascModel.main(FLAGS.hyper_train_path, FLAGS.hyper_eval_path, accuracyOnt, test_size, remaining_size, learning_rate, keep_prob)
-    tf.reset_default_graph()
-
-    # Save training results to disks with unique filenames
-
-    print(eval_num, l, hyperparams)
-
-    if best_loss is None or -l < best_loss:
-        best_loss = -l
-        best_hyperparams = hyperparams
-
-    result = {
-            'loss':   -l,
-            'status': STATUS_OK,
-            'space': hyperparams,
-        }
-
-    save_json_result(str(l), result)
-
-    return result
-
-def svm_objective(hyperparams):
-    global eval_num
-    global best_loss
-    global best_hyperparams
-
-    eval_num += 1
-    (c, gamma) = hyperparams
-    print(hyperparams)
-
-    l = svmModel.main(FLAGS.hyper_svm_train_path, FLAGS.hyper_svm_eval_path, accuracyOnt, test_size, remaining_size, c, gamma)
-    tf.reset_default_graph()
-
-    # Save training results to disks with unique filenames
-
-    print(eval_num, l, hyperparams)
-
-    if best_loss is None or -l < best_loss:
-        best_loss = -l
-        best_hyperparams = hyperparams
-
-    result = {
-            'loss':   -l,
-            'status': STATUS_OK,
-            'space': hyperparams,
-        }
-
-    save_json_result(str(l), result)
-
-    return result
-
-# Run a hyperopt trial
+# run hyperpot trial
 def run_a_trial():
     max_evals = nb_evals = 1
 

@@ -1,9 +1,5 @@
 import tensorflow as tf
-import lcrModel
-import lcrModelInverse
 import lcrModelAlt
-import cabascModel
-import svmModel
 from OntologyReasoner import OntReasoner
 from loadData import *
 
@@ -20,14 +16,10 @@ def main(_):
     loadData = True  # only for non-contextualised word embeddings.
     augment_data = False  # Load data must be true to augment
     useOntology=False
-    runCABASC = False
-    runLCRROT = False
-    runLCRROTINVERSE = False
     runLCRROTALT = True
-    runSVM = False
 
     #determine if backupmethod is used
-    if runCABASC or runLCRROT or runLCRROTALT or runLCRROTINVERSE or runSVM:
+    if runLCRROTALT:
         backup = True
     else:
         backup = False
@@ -67,43 +59,9 @@ def main(_):
             result.write('accuracy: '+ str(acc)+'\n')
             result.write('remaining size: '+ str(remaining_size_vec)+'\n')
             result.write('Accuracy: {}, St Dev:{} \n'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-        if runSVM == True:
-            test = REMAIN_svm_val
-        else:
             test = REMAIN_val
     else:
-        if runSVM == True:
-            test = BASE_svm_val
-        else:
-            test = BASE_val
-
-    if runLCRROT == True:
-        acc = []
-        #k-fold cross validation
-        for i in [8]:
-            acc1, _, _, _, _, _, _, _, _ = lcrModel.main(BASE_train+str(i)+'.txt',test+str(i)+'.txt', accuracyOnt, test_size[i], remaining_size)
-            acc.append(acc1)
-            tf.reset_default_graph()
-            print('iteration: '+ str(i))
-        with open("cross_results_"+str(FLAGS.year)+"/LCRROT_"+str(FLAGS.year)+'.txt', 'w') as result:
-            result.write(str(acc)+'\n')
-            result.write('Accuracy: {}, St Dev:{} /n'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-            print(str(split_size)+'-fold cross validation results')
-            print('Accuracy: {}, St Dev:{}'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-
-    if runLCRROTINVERSE == True:
-        acc = []
-        #k-fold cross validation
-        for i in range(split_size):
-            acc1, _, _, _, _, _ = lcrModelInverse.main(BASE_train+str(i)+'.txt',test+str(i)+'.txt', accuracyOnt, test_size[i], remaining_size)
-            acc.append(acc1)
-            tf.reset_default_graph()
-            print('iteration: '+ str(i))
-        with open("cross_results_"+str(FLAGS.year)+"/LCRROT_INVERSE_"+str(FLAGS.year)+'.txt', 'w') as result:
-            result.write(str(acc))
-            result.write('Accuracy: {}, St Dev:{} /n'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-            print(str(split_size)+'-fold cross validation results')
-            print('Accuracy: {}, St Dev:{}'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
+        test = BASE_val
 
     if runLCRROTALT == True:
         acc=[]
@@ -118,33 +76,6 @@ def main(_):
             result.write('Accuracy: {}, St Dev:{} /n'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
             print(str(split_size)+'-fold cross validation results')
             print('Accuracy: {}, St Dev:{}'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-
-    if runCABASC == True:
-        acc = []
-        #k-fold cross validation
-        for i in range(split_size):
-            acc1, _, _ = cabascModel.main(BASE_train+str(i)+'.txt',REMAIN_val+str(i)+'.txt', accuracyOnt, test_size[i], remaining_size)
-            acc.append(acc1)
-            tf.reset_default_graph()
-            print('iteration: '+ str(i))
-        with open("cross_results_"+str(FLAGS.year)+"/CABASC_"+str(FLAGS.year)+'.txt', 'w') as result:
-            result.write(str(acc))
-            result.write('Accuracy: {}, St Dev:{} /n'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-            print(str(split_size)+'-fold cross validation results')
-            print('Accuracy: {}, St Dev:{}'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-
-    if runSVM == True:
-        acc = []
-        #k-fold cross validation
-        for i in range(split_size):
-            acc1 = svmModel.main(BASE_svm_train+str(i)+'.txt',test+str(i)+'.txt', accuracyOnt, test_size[i], remaining_size)
-            acc.append(acc1)
-            tf.reset_default_graph()
-        with open("cross_results_"+str(FLAGS.year)+"/SVM_"+str(FLAGS.year)+'.txt', 'w') as result:
-            print(str(split_size)+'-fold cross validation results')
-            print('Accuracy: {:.5f}, St Dev:{:.4f}'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
-            result.write(str(acc))
-            result.write('Accuracy: {:.5f}, St Dev:{:.4f} /n'.format(np.mean(np.asarray(acc)), np.std(np.asarray(acc))))
 
     print('Finished program succesfully')
 
