@@ -1,0 +1,14 @@
+hyperopt==0.1
+nltk==3.3
+numpy==1.14.6
+Owlready2==0.8
+pandas==0.23.1
+pymongo==3.7.0
+scikit-learn==0.19.1
+scipy==1.1.0
+tensorflow==1.8.0
+tensorflow-gpu==1.8.0
+tqdm==4.23.3
+
+pywsd==1.2.4
+googletrans==3.0.0
