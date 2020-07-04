@@ -6,7 +6,7 @@ pandas==0.23.1
 pymongo==3.7.0
 scikit-learn==0.19.1
 scipy==1.1.0
-tensorflow==1.8.0
+tensorflow==1.15.2
 tensorflow-gpu==1.8.0
 tqdm==4.23.3
 
