@@ -32,8 +32,8 @@ In the file config.py, there are several Data Augmentation variables. These can 
 - original_multiplier = 3
 
 Furthermore, in main.py make sure that:
- loadData = True 
- augment_data = True 
- useOntology = True 
- runLCRROTALT = True
+ - loadData = True 
+ - augment_data = True 
+ - useOntology = True 
+ - runLCRROTALT = True
 For the rest all parameters in main.py should be False.
