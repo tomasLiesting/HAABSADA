@@ -1,4 +1,4 @@
-# How to run HAABSADA
+# How to run HAABSADA, a Hybrid Approach for Aspect Based Sentiment Analysis with Data Augmentation
 Data Augmentation extenstion on HAABSA. In order to use the code please follow the following steps:
 
 1. Go to https://github.com/ofwallaart/HAABSA and follow the steps on the github page. There are some possible problems that you can come across when following his, which I hope to tackle as much as possible.
