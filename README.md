@@ -1,7 +1,19 @@
 # HAABSADA
 Data Augmentation extenstion on HAABSA. In order to use the code please follow the following steps:
 
-1. Go to https://github.com/ofwallaart/HAABSA and follow the steps on the github page
-2. Clone this repository and overwrite the duplicate files
-3. In your environment, using this requirements.txt file, run `pip install -r requirements.txt`
-4. Make sure you have access to the google translate api. You have to create an account and get 300€ for free (https://cloud.google.com/docs/authentication/getting-started#windows)
+1. Go to https://github.com/ofwallaart/HAABSA and follow the steps on the github page. There are some possible problems that you can come across when following his, which I hope to tackle as much as possible.
+  - When running on windows, note that you need compatible c++ visual studio build tools (https://visualstudio.microsoft.com/downloads/). 
+  - If you want to run on GPU (NVIDIA) note that you need compatible drivers, Cuda (v9.0) and cuDNN (v6.4)
+  - If you need nltk files --> in your environment run `python` afterwards `import nltk` afterwards `ntlk.download(NLTK_FILE)`
+  - Make sure your environment is active (with `Scripts/activate`) --> you should see the name of your environment next to the command line
+2. Clone this repository using `git clone https://github.com/tomasLiesting/HAABSADA.git` and, in your file explorer, overwrite the files in HAABSA with the files in this repo
+3. In your environment, cd to HAABSA, and again run `pip install -r requirements.txt`
+4. Make sure you have access to the google translate api, if you want to use backtranslation. You have to create an account and get 300€ for free. This is done as follows:
+  - `pip install --upgrade google-cloud-translate`
+  - Afterwards go to this page https://cloud.google.com/docs/authentication/getting-started#windows
+  - Create a service account
+  - Create a new project
+  - Create a service account with as role project owner
+  - Download the json authentication (and place it somewhere you like)
+  - In the environment run `$env:GOOGLE_APPLICATION_CREDENTIALS="[PATH]"` (where PATH is the path to your json authentication, e.g. `$env:GOOGLE_APPLICATION_CREDENTIALS="C:\Users\username\Downloads\my-key.json"`
+5. In the environment, run `python main.py`
