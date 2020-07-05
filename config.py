@@ -8,9 +8,9 @@ import sys
 FLAGS = tf.app.flags.FLAGS
 #general variables
 tf.app.flags.DEFINE_string('embedding_type','glove','can be: glove, word2vec-cbow, word2vec-SG, fasttext, BERT, BERT_Large, ELMo')
-tf.app.flags.DEFINE_integer("year", 2016, "year data set [2014]")
+tf.app.flags.DEFINE_integer("year", 2015, "year data set [2014]")
 tf.app.flags.DEFINE_integer('embedding_dim', 300, 'dimension of word embedding')
-tf.app.flags.DEFINE_integer('batch_size', 128, 'number of example per batch')
+tf.app.flags.DEFINE_integer('batch_size', 20, 'number of example per batch')
 tf.app.flags.DEFINE_integer('n_hidden', 300, 'number of hidden unit')
 tf.app.flags.DEFINE_float('learning_rate', 0.07, 'learning rate')
 tf.app.flags.DEFINE_integer('n_class', 3, 'number of distinct class')
@@ -29,8 +29,8 @@ tf.app.flags.DEFINE_string('is_r', '1', 'prob')
 tf.app.flags.DEFINE_integer('max_target_len', 19, 'max target length')
 
 # traindata, testdata and embeddings, train path aangepast met ELMo
-tf.app.flags.DEFINE_string("train_path_ont", "data/programGeneratedData/GloVetraindata"+str(FLAGS.year)+".txt", "train data path for ont")
-tf.app.flags.DEFINE_string("test_path_ont", "data/programGeneratedData/GloVetestdata"+str(FLAGS.year)+".txt", "formatted test data path")
+tf.app.flags.DEFINE_string("train_path_ont", "data/programGeneratedData/300traindata"+str(FLAGS.year)+".txt", "train data path for ont")
+tf.app.flags.DEFINE_string("test_path_ont", "data/programGeneratedData/300testdata"+str(FLAGS.year)+".txt", "formatted test data path")
 tf.app.flags.DEFINE_string("train_path", "data/programGeneratedData/" + str(FLAGS.embedding_type) +str(FLAGS.embedding_dim)+'traindata'+str(FLAGS.year)+".txt", "train data path")
 tf.app.flags.DEFINE_string("test_path", "data/programGeneratedData/" + str(FLAGS.embedding_type) + str(FLAGS.embedding_dim)+'testdata'+str(FLAGS.year)+".txt", "formatted test data path")
 tf.app.flags.DEFINE_string("embedding_path", "data/programGeneratedData/" + str(FLAGS.embedding_type) + str(FLAGS.embedding_dim)+'embedding'+str(FLAGS.year)+".txt", "pre-trained glove vectors file path")
@@ -42,7 +42,7 @@ tf.app.flags.DEFINE_string("EDA_type", "adjusted", "type of eda (original or adj
 tf.app.flags.DEFINE_integer("EDA_deletion", 0, "number of deletion augmentations")
 tf.app.flags.DEFINE_integer("EDA_replacement", 1, "number of replacement augmentations")
 tf.app.flags.DEFINE_integer("EDA_insertion", 1, "number of insertion augmentations")
-tf.app.flags.DEFINE_integer("EDA_swap", 3, "number of swap augmentations") # in adjusted mode, higher number means more swaps within the same category
+tf.app.flags.DEFINE_integer("EDA_swap", 1, "number of swap augmentations") # in adjusted mode, higher number means more swaps within the same category
 tf.app.flags.DEFINE_float("EDA_pct", .2, "percentage of words affected by augmentation") # in adjusted mode EDA_swap not affected
 # Note that each augmentation is a seperate sentence (so replacement = 1 means twice as much training data, so dont make the sum >10)
 tf.app.flags.DEFINE_string("backtranslation_langs", "None", "languages to translate to, seperated by space, each space is an augmentation, write None if not using")
@@ -50,7 +50,7 @@ tf.app.flags.DEFINE_integer("use_word_mixup", 0, "boolean whether to use word mi
 tf.app.flags.DEFINE_integer("use_sentence_mixup", 0, "boolean whether to use sentence mixup or not")
 tf.app.flags.DEFINE_float("mixup_beta", 0.2, 'the alpha and beta values deciding the interpolation in mixup')
 tf.app.flags.DEFINE_integer("mixup_on_augmentations", 0, "If mixup should be applied on augmentations or only on original data")
-tf.app.flags.DEFINE_integer("original_multiplier", 1, "How many times the original data should be used in the training data")
+tf.app.flags.DEFINE_integer("original_multiplier", 3, "How many times the original data should be used in the training data")
 
 
 # Data Augmentation paths
