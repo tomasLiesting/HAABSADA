@@ -64,7 +64,7 @@ def get_only_chars(line):
 # nltk.download('wordnet')
 from nltk.corpus import wordnet
 import nltk
-from pywsd import adapted_lesk
+from pywsd import simple_lesk
 
 def synonym_replacement(words, aspect, n, adjusted):
     new_words = words.copy()
@@ -118,7 +118,7 @@ def get_synonyms_adjusted(words, aspect, random_word):
             return []
         elif word == random_word:
             with_asp = [x if x != '$t$' else aspect for x in words]
-            meaning = adapted_lesk(' '.join(with_asp), random_word, pos=get_wordnet_pos(func))
+            meaning = simple_lesk(' '.join(with_asp), random_word, pos=get_wordnet_pos(func))
     synonyms = []
     if meaning:
         for syn in meaning.lemma_names():
