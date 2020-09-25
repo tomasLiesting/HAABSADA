@@ -7,7 +7,7 @@ pymongo==3.7.0
 scikit-learn==0.19.1
 scipy==1.1.0
 tensorflow==1.8.0
-tensorflow-gpu==1.8.0
+tensorflow-gpu==1.15.4
 tqdm==4.23.3
 
 pywsd==1.2.4
